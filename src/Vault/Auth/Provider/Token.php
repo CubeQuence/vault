@@ -1,6 +1,6 @@
 <?php
 
-namespace Vault\Auth;
+namespace Vault\Auth\Provider;
 
 class Token
 {
