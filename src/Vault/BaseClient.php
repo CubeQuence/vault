@@ -66,7 +66,7 @@ abstract class BaseClient
     }
 
     /**
-     * Send request to API
+     * Test auth for API
      */
     protected function send(
         string $method,
@@ -74,7 +74,7 @@ abstract class BaseClient
         array | null $body = null
     ): object {
         try {
-            return $this->send2(
+            return $this->send_raw(
                 method: $method,
                 path: $path,
                 body: $body
@@ -87,7 +87,7 @@ abstract class BaseClient
             ) {
                 $this->authenticate();
 
-                return $this->send2(
+                return $this->send_raw(
                     method: $method,
                     path: $path,
                     body: $body
@@ -98,7 +98,10 @@ abstract class BaseClient
         }
     }
 
-    private function send2(// TODO: better name
+    /**
+     * Send request to API
+     */
+    private function send_raw(
         string $method,
         string $path,
         array | null $body = null
