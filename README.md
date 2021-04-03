@@ -12,22 +12,42 @@ PHP8 HashiCorp Vault client
 
 ## Installation
 
-For development
+1. `composer require cubequence/vault`
 
-1. `composer create-project --prefer-dist cubequence/cubequence hello-world`
-2. Edit `.env`
-3. `php cubequence app:key`
-4. `php cubequence db:migrate`
-5. `php cubequence db:seed`
-6. Start development server `php -S localhost:8080 -t public`
+## Demo Code
+```php
+<?php
 
-For deployment
+require './vendor/autoload.php';
 
-1. `git clone https://github.com/CubeQuence/CubeQuence`
-2. `composer install --optimize-autoloader --no-dev`
-3. Edit `.env`
-4. `php cubequence app:key`
-5. `php cubequence db:migrate`
+use Vault\Auth\Provider\Token;
+use Vault\Client;
+
+try {
+    $client = new Client(
+        authProvider: new Token(token: 's.XXXXXXXXXXXX'), // Other authProviders are available
+        baseUri: 'http://127.0.0.1:8200',
+        version: 'v1' // Optional variable
+    );
+
+    $write = $client->write('/kv2/data/helloworld?version=1', [
+        'foo' => 'bar2',
+    ]);
+    $read = $client->read('/kv2/data/helloworld?version=1');
+    $keys = $client->keys('/kv2/data/helloworld?version=1');
+    $revoke = $client->revoke('/kv2/data/helloworld?version=1');
+} catch (\Throwable $th) {
+    echo $th->getMessage();
+    exit;
+}
+
+echo json_encode([
+    "write" => $write,
+    "read" => $read,
+    "keys" => $keys,
+    "revoke" => $revoke,
+]);
+```
 
 ## Security Vulnerabilities
 
