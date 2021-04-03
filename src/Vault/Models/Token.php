@@ -23,7 +23,7 @@ final class Token
     public function isExpired(): bool
     {
         if (! $this->creationTime || ! $this->creationTtl) {
-            throw new TokenException('Token info not defined');
+            throw new TokenException('Token creationTime or creationTtl not defined');
         }
 
         if ($this->creationTtl <= 0) {
