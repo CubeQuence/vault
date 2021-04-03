@@ -135,6 +135,12 @@ abstract class BaseClient
             );
         }
 
-        return json_decode($response->getBody()->getContents());
+        $output = $response->getBody()->getContents();
+
+        if (!$output) {
+            return (object) [];
+        }
+
+        return json_decode($output);
     }
 }

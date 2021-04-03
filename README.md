@@ -20,6 +20,9 @@ PHP8 HashiCorp Vault client
 
 require './vendor/autoload.php';
 
+// https://www.vaultproject.io/api-docs/auth
+// https://www.vaultproject.io/api-docs/secret
+
 use Vault\Auth\Provider\Token;
 use Vault\Client;
 
@@ -30,22 +33,22 @@ try {
         version: 'v1' // Optional variable
     );
 
-    $write = $client->write('/kv2/data/helloworld?version=1', [
-        'foo' => 'bar2',
+    $write = $client->write('/kv1/helloworld', [
+        'foo' => 'bar',
     ]);
-    $read = $client->read('/kv2/data/helloworld?version=1');
-    $keys = $client->keys('/kv2/data/helloworld?version=1');
-    $revoke = $client->revoke('/kv2/data/helloworld?version=1');
+    $read = $client->read('/kv1/helloworld');
+    $keys = $client->keys('/kv1');
+    $revoke = $client->revoke('/kv1/helloworld');
 } catch (\Throwable $th) {
     echo $th->getMessage();
     exit;
 }
 
 echo json_encode([
-    "write" => $write,
+    "write" => $write, // NoContent
     "read" => $read,
     "keys" => $keys,
-    "revoke" => $revoke,
+    "revoke" => $revoke, // NoContent
 ]);
 ```
 
