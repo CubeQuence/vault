@@ -23,12 +23,19 @@ require './vendor/autoload.php';
 // https://www.vaultproject.io/api-docs/auth
 // https://www.vaultproject.io/api-docs/secret
 
+use Vault\Auth\Provider\AppRole;
 use Vault\Auth\Provider\Token;
 use Vault\Client;
 
 try {
+    $tokenProvider = new Token(token: 's.XXXXXXXXXXXX');
+    $approleProvider = new AppRole(
+        roleId: 'XXXXXX-XXXXXX-XXXXXX-XXXXXX',
+        secretId: 'XXXXXX-XXXXXX-XXXXXX-XXXXXX'
+    );
+
     $client = new Client(
-        authProvider: new Token(token: 's.XXXXXXXXXXXX'), // Other authProviders are available
+        authProvider: $tokenProvider,
         baseUri: 'http://127.0.0.1:8200',
         version: 'v1' // Optional variable
     );

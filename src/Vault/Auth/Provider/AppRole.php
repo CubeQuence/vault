@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vault\Auth\Provider;
 
-use Psr\Http\Client\ClientExceptionInterface;
 use Vault\Auth\AuthProvider;
 
 final class AppRole extends AuthProvider
@@ -16,9 +15,6 @@ final class AppRole extends AuthProvider
     ) {
     }
 
-    /**
-     * @throws ClientExceptionInterface
-     */
     public function getToken(): string
     {
         $response = $this->client->write(
@@ -29,10 +25,6 @@ final class AppRole extends AuthProvider
             ]
         );
 
-        var_dump($response);
-
-        // TODO: return response->token
-
-        return '123';
+        return $response?->auth?->client_token;
     }
 }

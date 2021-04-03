@@ -8,16 +8,15 @@ use Vault\Client;
 
 abstract class AuthProvider
 {
-    private Client $client;
+    protected Client $client;
 
+    /**
+     * Set client instance for auth types that
+     * need to exchange credentials for a token
+     */
     public function setClient(Client $client): void
     {
         $this->client = $client;
-    }
-
-    public function getClient(): Client
-    {
-        return $this->client;
     }
 
     /**

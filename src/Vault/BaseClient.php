@@ -21,6 +21,7 @@ abstract class BaseClient
         private string $version = 'v1'
     ) {
         $authProvider->setClient(client: $this);
+        $this->token = new Token();
         $this->authenticate();
     }
 

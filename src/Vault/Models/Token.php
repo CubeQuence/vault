@@ -9,7 +9,7 @@ use Vault\Exceptions\TokenException;
 final class Token
 {
     public function __construct(
-        private string $token,
+        private string | null $token = null,
         private int | null $creationTime = null,
         private int | null $creationTtl = null
     ) {
@@ -22,10 +22,6 @@ final class Token
 
     public function isExpired(): bool
     {
-        if (! $this->creationTime || ! $this->creationTtl) {
-            throw new TokenException('Token creationTime or creationTtl not defined');
-        }
-
         if ($this->creationTtl <= 0) {
             return false;
         }
