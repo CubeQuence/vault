@@ -13,7 +13,7 @@ final class Token extends AuthProvider
     ) {
     }
 
-    public function getClientToken(): string
+    public function getToken(): string
     {
         return $this->token;
     }

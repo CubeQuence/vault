@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Vault\Exceptions;
 
-final class AuthenticationException extends \Exception
+use Exception;
+
+final class AuthenticationException extends Exception
 {
 }

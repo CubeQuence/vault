@@ -21,7 +21,7 @@ abstract class AuthProvider
     }
 
     /**
-     * Returns clientToken for further interactions with Vault.
+     * Returns token for further interactions with Vault.
      */
-    abstract public function getClientToken(): string;
+    abstract public function getToken(): string;
 }

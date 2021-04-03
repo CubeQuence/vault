@@ -19,7 +19,7 @@ final class AppRole extends AuthProvider
     /**
      * @throws ClientExceptionInterface
      */
-    public function getClientToken(): string
+    public function getToken(): string
     {
         $response = $this->client->write(
             path: '/auth/' . $this->name . '/login',
@@ -31,7 +31,7 @@ final class AppRole extends AuthProvider
 
         var_dump($response);
 
-        // TODO: return response->clientToken
+        // TODO: return response->token
 
         // return $response->getAuth();
         return '123';

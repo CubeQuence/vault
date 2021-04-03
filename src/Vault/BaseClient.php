@@ -9,7 +9,6 @@ use GuzzleHttp\Exception\TransferException;
 use Vault\Auth\AuthProvider;
 use Vault\Exceptions\AuthenticationException;
 use Vault\Exceptions\RequestException;
-use Vault\Helpers\ModelHelper;
 use Vault\Models\Token;
 
 abstract class BaseClient
@@ -37,9 +36,9 @@ abstract class BaseClient
 
     private function authenticate(): void
     {
-        $clientToken = $this->authProvider->getClientToken();
+        $token = $this->authProvider->getToken();
 
-        if (! $clientToken) {
+        if (! $token) {
             throw new AuthenticationException(
                 message: 'Cannot authenticate'
             );
@@ -47,24 +46,22 @@ abstract class BaseClient
 
         // Set temporary token
         $this->token = new Token(
-            clientToken: $clientToken
+            token: $token
         );
 
         // Get token info
         $path = $this->buildPath(path: '/auth/token/lookup-self');
-        $response = (array) $this->send(
+        $response = $this->send(
             method: 'GET',
             path: $path
         );
 
-        // Build new Token
-        $tokenPayload = array_merge(
-            ['clientToken' => $clientToken],
-            ModelHelper::camelize(array: $response)
-        );
-
         // Set updated token
-        $this->token = new Token(...$tokenPayload);
+        $this->token = new Token(
+            token: $token,
+            creationTime: $response?->data?->creation_time,
+            creationTtl: $response?->data?->creation_time
+        );
     }
 
     // ********** //
@@ -87,7 +84,7 @@ abstract class BaseClient
             // Re-authenticate if 403 and token is expired
             if (
                 $error->getCode() === 403 &&
-                $this->token->isTokenExpired()
+                $this->token->isExpired()
             ) {
                 $this->authenticate();
 
@@ -116,7 +113,7 @@ abstract class BaseClient
         $headers = [
             'User-Agent' => 'VaultPHP/1.0.0',
             'X-Vault-Token' => $this->token ?
-                $this->token->getClientToken() : null,
+                $this->token->getToken() : null,
         ];
 
         if (strpos($path, '?') !== false) {
