@@ -32,8 +32,9 @@ abstract class BaseClient
         return sprintf('/%s%s', $this->version, $path);
     }
 
-    // ********** //
-
+    /**
+     * Get new token using credentials from authProvider
+     */
     private function authenticate(): void
     {
         $token = $this->authProvider->getToken();
@@ -64,8 +65,6 @@ abstract class BaseClient
         );
     }
 
-    // ********** //
-
     /**
      * Send request to API
      */
@@ -81,7 +80,7 @@ abstract class BaseClient
                 body: $body
             );
         } catch (RequestException $error) {
-            // Re-authenticate if 403 and token is expired
+            // Try to re-authenticate if 403 and token is expired
             if (
                 $error->getCode() === 403 &&
                 $this->token->isExpired()
@@ -112,8 +111,7 @@ abstract class BaseClient
         $query = null;
         $headers = [
             'User-Agent' => 'VaultPHP/1.0.0',
-            'X-Vault-Token' => $this->token ?
-                $this->token->getToken() : null,
+            'X-Vault-Token' => $this->token->getToken(),
         ];
 
         if (strpos($path, '?') !== false) {

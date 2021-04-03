@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Vault\Models;
 
+use Vault\Exceptions\TokenException;
+
 final class Token
 {
     public function __construct(
@@ -15,11 +17,15 @@ final class Token
 
     public function getToken(): string | null
     {
-        return $this->token;
+        return $this->token ?: null;
     }
 
     public function isExpired(): bool
     {
+        if (! $this->creationTime || ! $this->creationTtl) {
+            throw new TokenException('Token info not defined');
+        }
+
         if ($this->creationTtl <= 0) {
             return false;
         }

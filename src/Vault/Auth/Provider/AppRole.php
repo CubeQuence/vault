@@ -33,7 +33,6 @@ final class AppRole extends AuthProvider
 
         // TODO: return response->token
 
-        // return $response->getAuth();
         return '123';
     }
 }
