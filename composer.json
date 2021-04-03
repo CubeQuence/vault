@@ -17,6 +17,7 @@
         "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
+        "nunomaduro/phpinsights": "dev-master",
         "pestphp/pest": "^1.0"
     },
     "scripts": {

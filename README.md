@@ -35,5 +35,9 @@ Please review [our security policy](https://github.com/CubeQuence/vault/security
 
 ## License
 
+Heavily inspired by:
+- https://github.com/mittwald/vaultPHP
+- https://github.com/CSharpRU/vault-php
+
 Copyright © 2020 [Luca Castelnuovo](https://github.com/Luca-Castelnuovo). <br />
 This project is [MIT](LICENSE.md) licensed.
