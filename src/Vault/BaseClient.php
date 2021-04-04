@@ -114,7 +114,6 @@ abstract class BaseClient
 
         $query = null;
         $headers = [
-            'User-Agent' => 'VaultPHP/1.0.0',
             'X-Vault-Token' => $this->token->getToken(),
         ];
 
