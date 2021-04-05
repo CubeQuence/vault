@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Vault\Auth;
+namespace CQ\Vault\Auth;
 
-use Vault\Client;
+use CQ\Vault\Client;
 
 abstract class AuthProvider
 {

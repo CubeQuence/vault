@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Vault\Auth\Provider;
+namespace CQ\Vault\Auth\Provider;
 
-use Vault\Auth\AuthProvider;
+use CQ\Vault\Auth\AuthProvider;
 
 final class Token extends AuthProvider
 {

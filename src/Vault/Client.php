@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vault;
+namespace CQ\Vault;
 
 final class Client extends BaseClient
 {

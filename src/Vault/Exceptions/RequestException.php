@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vault\Exceptions;
+namespace CQ\Vault\Exceptions;
 
 use Exception;
 use Psr\Http\Client\RequestExceptionInterface as ExceptionInterface;

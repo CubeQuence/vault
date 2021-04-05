@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Vault\Models;
+namespace CQ\Vault\Models;
 
-use Vault\Exceptions\TokenException;
+use CQ\Vault\Exceptions\TokenException;
 
 final class Token
 {

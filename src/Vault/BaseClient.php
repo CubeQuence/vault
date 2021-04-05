@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Vault;
+namespace CQ\Vault;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
-use Vault\Auth\AuthProvider;
-use Vault\Exceptions\AuthenticationException;
-use Vault\Exceptions\RequestException;
-use Vault\Models\Token;
+use CQ\Vault\Auth\AuthProvider;
+use CQ\Vault\Exceptions\AuthenticationException;
+use CQ\Vault\Exceptions\RequestException;
+use CQ\Vault\Models\Token;
 
 abstract class BaseClient
 {

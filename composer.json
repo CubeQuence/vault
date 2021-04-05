@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Vault\\": "src/Vault"
+            "CQ\\Vault\\": "src/Vault"
         }
     },
     "minimum-stability": "dev",

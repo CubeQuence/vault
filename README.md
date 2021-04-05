@@ -23,9 +23,9 @@ require './vendor/autoload.php';
 // https://www.vaultproject.io/api-docs/auth
 // https://www.vaultproject.io/api-docs/secret
 
-use Vault\Auth\Provider\AppRole;
-use Vault\Auth\Provider\Token;
-use Vault\Client;
+use CQ\Vault\Auth\Provider\AppRole;
+use CQ\Vault\Auth\Provider\Token;
+use CQ\Vault\Client;
 
 try {
     $tokenProvider = new Token(token: 's.XXXXXXXXXXXX');
