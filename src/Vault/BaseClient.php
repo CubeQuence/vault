@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace CQ\Vault;
 
 use CQ\Request\Request;
+use CQ\Request\Exceptions\BadResponseException;
 use CQ\Vault\Auth\AuthProvider;
 use CQ\Vault\Exceptions\AuthenticationException;
-use CQ\Vault\Exceptions\RequestException;
 use CQ\Vault\Models\Token;
 
 abstract class BaseClient
@@ -82,7 +82,7 @@ abstract class BaseClient
                     'X-Vault-Token' => $this->token->getToken(),
                 ]
             );
-        } catch (RequestException $error) {
+        } catch (BadResponseException $error) {
             // Try to re-authenticate if 403 and token is expired
             if (
                 $error->getCode() === 403 &&
