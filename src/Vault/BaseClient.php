@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace CQ\Vault;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\TransferException;
+use CQ\Request\Request;
 use CQ\Vault\Auth\AuthProvider;
 use CQ\Vault\Exceptions\AuthenticationException;
 use CQ\Vault\Exceptions\RequestException;
@@ -75,10 +74,13 @@ abstract class BaseClient
         array | null $body = null
     ): object {
         try {
-            return $this->send_raw(
+            return Request::send(
                 method: $method,
                 path: $path,
-                body: $body
+                json: $body,
+                headers: [
+                    'X-Vault-Token' => $this->token->getToken(),
+                ]
             );
         } catch (RequestException $error) {
             // Try to re-authenticate if 403 and token is expired
@@ -88,59 +90,17 @@ abstract class BaseClient
             ) {
                 $this->authenticate();
 
-                return $this->send_raw(
+                return Request::send(
                     method: $method,
                     path: $path,
-                    body: $body
+                    json: $body,
+                    headers: [
+                    'X-Vault-Token' => $this->token->getToken(),
+                ]
                 );
             }
 
             throw $error;
         }
-    }
-
-    /**
-     * Send request to API
-     */
-    private function send_raw(
-        string $method,
-        string $path,
-        array | null $body = null
-    ): object {
-        $client = new Client([
-            'base_uri' => $this->baseUri,
-            'timeout' => 2.0,
-        ]);
-
-        $query = null;
-        $headers = [
-            'X-Vault-Token' => $this->token->getToken(),
-        ];
-
-        if (strpos($path, '?') !== false) {
-            [$path, $query] = explode('?', $path, 2);
-        }
-
-        try {
-            $response = $client->request($method, $path, [
-                'headers' => $headers,
-                'query' => $query,
-                'json' => $body,
-            ]);
-        } catch (TransferException $error) {
-            throw new RequestException(
-                message: $error->getMessage(),
-                code: $error->getCode(),
-                previous: $error
-            );
-        }
-
-        $output = $response->getBody()->getContents();
-
-        if (!$output) {
-            return (object) [];
-        }
-
-        return json_decode($output);
     }
 }
