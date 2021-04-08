@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace CQ\Vault\Models;
 
-use CQ\Vault\Exceptions\TokenException;
-
 final class Token
 {
     public function __construct(
