@@ -28,5 +28,4 @@ Heavily inspired by:
 - https://github.com/mittwald/vaultPHP
 - https://github.com/CSharpRU/vault-php
 
-Copyright © 2020 [Luca Castelnuovo](https://github.com/Luca-Castelnuovo). <br />
-This project is [MIT](LICENSE.md) licensed.
+The CubeQuence software is open-sourced software licensed under the [MIT license](LICENSE.md).
