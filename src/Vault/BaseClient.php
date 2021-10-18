@@ -29,7 +29,7 @@ abstract class BaseClient
      */
     protected function buildPath(string $path): string
     {
-        return sprintf('/%s%s', $this->version, $path);
+        return "{$this->baseUri}/{$this->version}{$path}";
     }
 
     /**
@@ -39,7 +39,7 @@ abstract class BaseClient
     {
         $token = $this->authProvider->getToken();
 
-        if (! $token) {
+        if (!$token) {
             throw new AuthenticationException(
                 message: 'Cannot authenticate'
             );
@@ -61,7 +61,7 @@ abstract class BaseClient
         $this->token = new Token(
             token: $token,
             creationTime: $response?->data?->creation_time,
-            creationTtl: $response?->data?->creation_time
+            creationTtl: $response?->data?->creation_ttl
         );
     }
 
@@ -95,8 +95,8 @@ abstract class BaseClient
                     path: $path,
                     json: $body,
                     headers: [
-                    'X-Vault-Token' => $this->token->getToken(),
-                ]
+                        'X-Vault-Token' => $this->token->getToken(),
+                    ]
                 );
             }
 

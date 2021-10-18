@@ -6,7 +6,7 @@ namespace CQ\Vault;
 
 final class Client extends BaseClient
 {
-    public function read(string $path): object
+    public function get(string $path): object
     {
         $path = $this->buildPath(path: $path);
 
@@ -16,7 +16,7 @@ final class Client extends BaseClient
         );
     }
 
-    public function keys(string $path): object
+    public function list(string $path): object
     {
         $path = $this->buildPath(path: $path);
 
@@ -26,7 +26,7 @@ final class Client extends BaseClient
         );
     }
 
-    public function write(string $path, array $body): object
+    public function post(string $path, array $body): object
     {
         $path = $this->buildPath(path: $path);
 
@@ -37,7 +37,7 @@ final class Client extends BaseClient
         );
     }
 
-    public function revoke(string $path): object
+    public function delete(string $path): object
     {
         $path = $this->buildPath(path: $path);
 

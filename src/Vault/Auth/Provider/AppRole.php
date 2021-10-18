@@ -17,7 +17,7 @@ final class AppRole extends AuthProvider
 
     public function getToken(): string
     {
-        $response = $this->client->write(
+        $response = $this->client->post(
             path: '/auth/' . $this->name . '/login',
             body: [
                 'role_id' => $this->roleId,
