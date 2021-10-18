@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// https://www.vaultproject.io/api-docs/auth
 // https://www.vaultproject.io/api/secret/transit
 
 use CQ\Vault\Auth\Provider\Token;
@@ -19,7 +18,10 @@ try {
         baseUri: 'http://127.0.0.1:8200',
     );
 
-    $transit = new Transit(client: $client);
+    $transit = new Transit(
+        client: $client,
+        path: 'transit' // optional
+    );
 
     $string = 'Hello World';
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// https://www.vaultproject.io/api-docs/auth
 // https://www.vaultproject.io/api-docs/secret/totp
 
 use CQ\Vault\Auth\Provider\Token;
@@ -19,7 +18,10 @@ try {
         baseUri: 'http://127.0.0.1:8200',
     );
 
-    $totp = new TOTP(client: $client);
+    $totp = new TOTP(
+        client: $client,
+        path: 'totp' // optional
+    );
 
     $createKey = $totp->createKey(
         key: 'my-key',
