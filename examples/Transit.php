@@ -66,19 +66,21 @@ echo json_encode([
 /** Sample Output
  *{
  *  "string": "Hello World",
+ *
  *  "key": {
  *    "listKeys": [
  *      "key1-aes256",
  *      "key2-rsa2048"
  *    ],
- *    "rotateKey": "",
+ *    "rotateKey": null,
  *  },
+ *
  *  "actions": {
  *    "decrypt": "Hello World",
- *    "encrypt": "vault:v1:+42fB62IrIMmi/pk74QaPNqoh9Gn8Cx14QE4+oEcSA52vLjYY1fx",
- *    "sign": "vault:v1:THxyNW5qy/UKJGVyuTX2t+8it77YZ+E1I6x7OU0kblE=",
+ *    "encrypt": "vault:v1:...",
+ *    "sign": "vault:v1:...",
  *    "verify": true,
- *    "rewrap": "vault:v2:cVe5Ju9yekQEH39hBYblOSoR20JXZnrWAfhksA2Mu4klH3s/FV6o"
+ *    "rewrap": "vault:v2:..."
  *  }
  *}
  */

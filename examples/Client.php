@@ -18,18 +18,23 @@ try {
     //     secretId: 'XXXXXX-XXXXXX-XXXXXX-XXXXXX'
     // );
 
+    // Login client using provider
     $client = new Client(
         authProvider: $tokenProvider,
         baseUri: 'http://127.0.0.1:8200',
         version: 'v1' // Optional variable
     );
 
-    $write = $client->post('/kv1/helloworld', [
-        'foo' => 'bar',
-    ]);
-    $read = $client->get('/kv1/helloworld');
-    $keys = $client->list('/kv1');
-    $revoke = $client->delete('/kv1/helloworld');
+    // Example operations
+    $write = $client->post(
+        path: '/kv1/helloworld',
+        body: [
+            'foo' => 'bar',
+        ]
+    );
+    $read = $client->get(path: '/kv1/helloworld');
+    $keys = $client->list(path: '/kv1');
+    $revoke = $client->delete(path: '/kv1/helloworld');
 } catch (\Throwable $th) {
     echo $th->getMessage();
     exit;
