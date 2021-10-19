@@ -37,6 +37,17 @@ final class Client extends BaseClient
         );
     }
 
+    public function put(string $path, array $body): object
+    {
+        $path = $this->buildPath(path: $path);
+
+        return $this->send(
+            method: 'PUT',
+            path: $path,
+            body: $body
+        );
+    }
+
     public function delete(string $path): object
     {
         $path = $this->buildPath(path: $path);
