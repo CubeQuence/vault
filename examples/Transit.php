@@ -20,27 +20,24 @@ try {
 
     $transit = new Transit(
         client: $client,
-        path: 'transit' // optional
+        path: 'transit', // optional
+        // key: 'key1-aes256' // this can be set if you already know the key you want to use
     );
 
     $string = 'Hello World';
 
     $listKeys = $transit->listKeys();
-    $key = $listKeys[0];
+    $transit->setKey(key: $listKeys[0]);
 
-    $encrypt = $transit->encrypt(key: $key, plaintext: $string);
-    $decrypt = $transit->decrypt(key: $key, ciphertext: $encrypt);
+    $encrypt = $transit->encrypt(plaintext: $string);
+    $decrypt = $transit->decrypt(ciphertext: $encrypt);
 
-    $sign = $transit->sign(key: $key, plaintext: $string);
-    $verify = $transit->verify(
-        key: $key,
-        plaintext: $string,
-        signature: $sign
-    );
+    $sign = $transit->sign(plaintext: $string);
+    $verify = $transit->verify(plaintext: $string, signature: $sign);
 
-    $rotateKey = $transit->rotateKey(key: $key);
+    $rotateKey = $transit->rotateKey();
 
-    $rewrap = $transit->rewrap(key: $key, ciphertext: $encrypt);
+    $rewrap = $transit->rewrap(ciphertext: $encrypt);
 } catch (\Throwable $th) {
     echo $th->getMessage();
     exit;
