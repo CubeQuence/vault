@@ -6,21 +6,18 @@ require __DIR__ . '/../vendor/autoload.php';
 
 // https://www.vaultproject.io/api-docs/secret/kv/kv-v1
 
-use CQ\Vault\Auth\Provider\Token;
-use CQ\Vault\Client;
 use CQ\Vault\Engines\KV1;
+use CQ\Vault\Vault;
 
 try {
-    $tokenProvider = new Token(token: 's.1mfDZPS7t95g1ZubOdMuYcOJ');
-
-    $client = new Client(
-        authProvider: $tokenProvider,
+    $vault = new Vault(
+        token: 's.1mfDZPS7t95g1ZubOdMuYcOJ',
         baseUri: 'http://127.0.0.1:8200',
     );
 
     $kv1 = new KV1(
-        client: $client,
-        path: 'kv1' // optional
+        vault: $vault,
+        path: 'kv1' // Optional
     );
 
     $list = $kv1->list();

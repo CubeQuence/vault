@@ -6,20 +6,17 @@ require __DIR__ . '/../vendor/autoload.php';
 
 // https://www.vaultproject.io/api/secret/transit
 
-use CQ\Vault\Auth\Provider\Token;
-use CQ\Vault\Client;
 use CQ\Vault\Engines\Transit;
+use CQ\Vault\Vault;
 
 try {
-    $tokenProvider = new Token(token: 's.1mfDZPS7t95g1ZubOdMuYcOJ');
-
-    $client = new Client(
-        authProvider: $tokenProvider,
+    $vault = new Vault(
+        token: 's.1mfDZPS7t95g1ZubOdMuYcOJ',
         baseUri: 'http://127.0.0.1:8200',
     );
 
     $transit = new Transit(
-        client: $client,
+        vault: $vault,
         path: 'transit', // optional
         // key: 'key1-aes256' // this can be set if you already know the key you want to use
     );

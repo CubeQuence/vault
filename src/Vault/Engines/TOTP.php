@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace CQ\Vault\Engines;
 
-use CQ\Vault\Client;
+use CQ\Vault\Vault;
 
 final class TOTP
 {
     public function __construct(
-        private Client $client,
+        private Vault $vault,
         private string $path = 'totp'
     ) {
     }
@@ -22,7 +22,7 @@ final class TOTP
         int $period = 30,
         int $digits = 6, // can be 6 or 8
     ): object {
-        $response = $this->client->post("/{$this->path}/keys/{$key}", [
+        $response = $this->vault->post("/{$this->path}/keys/{$key}", [
             'generate' => true,
             'key_size' => $keySize,
             'issuer' => $issuer,
@@ -37,20 +37,20 @@ final class TOTP
 
     public function listKeys(): array
     {
-        $response = $this->client->list("/{$this->path}/keys");
+        $response = $this->vault->list("/{$this->path}/keys");
 
         return $response->data->keys;
     }
 
     public function deleteKey(string $key): void
     {
-        $this->client->delete("/{$this->path}/keys/{$key}");
+        $this->vault->delete("/{$this->path}/keys/{$key}");
     }
 
     // Generate a TOTP token for a given key
     public function generate(string $key): string
     {
-        $response = $this->client->get("/{$this->path}/code/{$key}");
+        $response = $this->vault->get("/{$this->path}/code/{$key}");
 
         return $response->data->code;
     }
@@ -58,7 +58,7 @@ final class TOTP
     // Validate a TOTP token for a given key
     public function verify(string $key, string $code): bool
     {
-        $response = $this->client->post("/{$this->path}/code/{$key}", [
+        $response = $this->vault->post("/{$this->path}/code/{$key}", [
             'code' => $code,
         ]);
 

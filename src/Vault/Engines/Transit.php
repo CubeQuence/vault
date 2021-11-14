@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace CQ\Vault\Engines;
 
-use CQ\Vault\Client;
+use CQ\Vault\Vault;
 
 final class Transit
 {
     public function __construct(
-        private Client $client,
+        private Vault $vault,
         private string $path = 'transit',
         private string $key = ''
     ) {
@@ -24,21 +24,21 @@ final class Transit
 
     public function listKeys(): array
     {
-        $response = $this->client->list("/{$this->path}/keys");
+        $response = $this->vault->list("/{$this->path}/keys");
 
         return $response->data->keys;
     }
 
     public function rotateKey(): void
     {
-        $this->client->post("/{$this->path}/keys/{$this->key}/rotate", ['json' => 'required']);
+        $this->vault->post("/{$this->path}/keys/{$this->key}/rotate", ['json' => 'required']);
     }
 
     // TODO: deleteKey
 
     public function encrypt(string $plaintext): string
     {
-        $response = $this->client->post("/{$this->path}/encrypt/{$this->key}", [
+        $response = $this->vault->post("/{$this->path}/encrypt/{$this->key}", [
             'plaintext' => base64_encode($plaintext),
         ]);
 
@@ -47,7 +47,7 @@ final class Transit
 
     public function decrypt(string $ciphertext): string
     {
-        $response = $this->client->post("/{$this->path}/decrypt/{$this->key}", [
+        $response = $this->vault->post("/{$this->path}/decrypt/{$this->key}", [
             'ciphertext' => $ciphertext,
         ]);
 
@@ -56,7 +56,7 @@ final class Transit
 
     public function rewrap(string $ciphertext): string
     {
-        $response = $this->client->post("/{$this->path}/rewrap/{$this->key}", [
+        $response = $this->vault->post("/{$this->path}/rewrap/{$this->key}", [
             'ciphertext' => $ciphertext,
         ]);
 
@@ -65,7 +65,7 @@ final class Transit
 
     public function sign(string $plaintext): string
     {
-        $response = $this->client->post("/{$this->path}/hmac/{$this->key}", [
+        $response = $this->vault->post("/{$this->path}/hmac/{$this->key}", [
             'input' => base64_encode($plaintext),
         ]);
 
@@ -74,7 +74,7 @@ final class Transit
 
     public function verify(string $plaintext, string $signature): bool
     {
-        $response = $this->client->post("/{$this->path}/verify/{$this->key}", [
+        $response = $this->vault->post("/{$this->path}/verify/{$this->key}", [
             'input' => base64_encode($plaintext),
             'hmac' => $signature,
         ]);
